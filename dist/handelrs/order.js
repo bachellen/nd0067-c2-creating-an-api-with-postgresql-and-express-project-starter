@@ -49,7 +49,6 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 try {
-                    console.log("hala");
                     authorizationHeader = _req.headers.authorization;
                     token = authorizationHeader.split(' ')[1];
                     jsonwebtoken_1["default"].verify(token, TOKEN_SECRET);
@@ -81,7 +80,7 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("wlaah");
+                // console.log("wlaah")
                 try {
                     authorizationHeader = _req.headers.authorization;
                     token = authorizationHeader.split(' ')[1];
@@ -101,12 +100,10 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
                     res.send("Missing required parameter :id.");
                     return [2 /*return*/, false];
                 }
-                console.log(id);
                 return [4 /*yield*/, store.show(id)];
             case 2:
                 order = _a.sent();
                 res.json(order);
-                console.log(order);
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
@@ -139,23 +136,22 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                console.log('hey');
                 return [4 /*yield*/, store.create(order)];
             case 2:
                 newOrder = _a.sent();
-                res.json(order);
+                res.json(newOrder);
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
                 res.status(400);
-                res.json(err_1 + order);
+                res.json(err_1);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
 var addProduct = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorizationHeader, token, orderId, productId, quantity, addedProduct, err_2;
+    var authorizationHeader, token, order_id, product_id, quantity, addedProduct, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -169,13 +165,13 @@ var addProduct = function (_req, res) { return __awaiter(void 0, void 0, void 0,
                     res.json('Access denied, invalid token');
                     return [2 /*return*/];
                 }
-                orderId = _req.params.id;
-                productId = _req.body.productId;
+                order_id = Number(_req.params.id);
+                product_id = Number(_req.body.product_id);
                 quantity = parseInt(_req.body.quantity);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.addProduct(quantity, orderId, productId)];
+                return [4 /*yield*/, store.addProduct(quantity, order_id, product_id)];
             case 2:
                 addedProduct = _a.sent();
                 res.json(addedProduct);
@@ -189,10 +185,49 @@ var addProduct = function (_req, res) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
+var deleteOrder = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authorizationHeader, token, id, orders, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                try {
+                    authorizationHeader = _req.headers.authorization;
+                    token = authorizationHeader.split(' ')[1];
+                    jsonwebtoken_1["default"].verify(token, TOKEN_SECRET);
+                }
+                catch (error) {
+                    res.status(401);
+                    res.json('Access denied, invalid token');
+                    return [2 /*return*/];
+                }
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                id = _req.params.id;
+                if (id === undefined) {
+                    res.status(400);
+                    res.send("Missing required parameter :id.");
+                    return [2 /*return*/, false];
+                }
+                return [4 /*yield*/, store["delete"](id)];
+            case 2:
+                orders = _a.sent();
+                res.json(orders);
+                return [3 /*break*/, 4];
+            case 3:
+                error_3 = _a.sent();
+                res.status(400);
+                res.json({ error: error_3 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 function orderRoutes(app) {
     app.get("/orders", index);
     app.get("/orders/:id", show);
     app.post('/orders', create);
     app.post('/orders/:id/products', addProduct);
+    app["delete"]("/orders/:id", deleteOrder);
 }
 exports["default"] = orderRoutes;

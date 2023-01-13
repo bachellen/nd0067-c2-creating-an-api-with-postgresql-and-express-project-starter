@@ -49,7 +49,6 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 try {
-                    console.log("hala");
                     authorizationHeader = _req.headers.authorization;
                     token = authorizationHeader.split(' ')[1];
                     jsonwebtoken_1["default"].verify(token, TOKEN_SECRET);
@@ -113,13 +112,12 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 user = {
                     username: _req.body.username,
                     password: _req.body.password,
-                    firstname: _req.body.firstName,
-                    lastname: _req.body.lastName
+                    firstname: _req.body.firstname,
+                    lastname: _req.body.lastname
                 };
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                console.log('hey');
                 return [4 /*yield*/, store.create(user)];
             case 2:
                 newUser = _a.sent();
@@ -135,12 +133,11 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
         }
     });
 }); };
-var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var deleteuser = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var authorizationHeader, token, id, user, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("wlaah");
                 try {
                     authorizationHeader = _req.headers.authorization;
                     token = authorizationHeader.split(' ')[1];
@@ -160,12 +157,10 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
                     res.send("Missing required parameter :id.");
                     return [2 /*return*/, false];
                 }
-                console.log(id);
-                return [4 /*yield*/, store.show(id)];
+                return [4 /*yield*/, store["delete"](id)];
             case 2:
                 user = _a.sent();
                 res.json(user);
-                console.log(user);
                 return [3 /*break*/, 4];
             case 3:
                 error_3 = _a.sent();
@@ -176,10 +171,50 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
         }
     });
 }); };
+var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authorizationHeader, token, id, user, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                // console.log("wlaah")
+                try {
+                    authorizationHeader = _req.headers.authorization;
+                    token = authorizationHeader.split(' ')[1];
+                    jsonwebtoken_1["default"].verify(token, TOKEN_SECRET);
+                }
+                catch (error) {
+                    res.status(401);
+                    res.json('Access denied, invalid token');
+                    return [2 /*return*/];
+                }
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                id = _req.params.id;
+                if (id === undefined) {
+                    res.status(400);
+                    res.send("Missing required parameter :id.");
+                    return [2 /*return*/, false];
+                }
+                return [4 /*yield*/, store.show(id)];
+            case 2:
+                user = _a.sent();
+                res.json(user);
+                return [3 /*break*/, 4];
+            case 3:
+                error_4 = _a.sent();
+                res.status(400);
+                res.json({ error: error_4 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 function userRoutes(app) {
     app.get("/users", index);
-    app.post("/users/create", create);
+    app.post("/users", create);
     app.get("/users/:id", show);
     app.post("/users/auth", authenticate);
+    app["delete"]("/users/:id", deleteuser);
 }
 exports["default"] = userRoutes;

@@ -118,6 +118,31 @@ var Productstore = /** @class */ (function () {
             });
         });
     };
+    Productstore.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, product, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = 'Delete from products where id = ($1) returning *';
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        product = result.rows[0];
+                        conn.release();
+                        return [2 /*return*/, product];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("unable delete user (".concat(id, "): ").concat(err_4));
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return Productstore;
 }());
 exports.Productstore = Productstore;

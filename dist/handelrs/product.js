@@ -68,29 +68,24 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("wlaah");
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
+                _a.trys.push([0, 2, , 3]);
                 id = _req.params.id;
                 if (id === undefined) {
                     res.status(400);
                     res.send("Missing required parameter :id.");
                     return [2 /*return*/, false];
                 }
-                console.log(id);
                 return [4 /*yield*/, store.show(id)];
-            case 2:
+            case 1:
                 product = _a.sent();
                 res.json(product);
-                console.log(product);
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 error_2 = _a.sent();
                 res.status(400);
                 res.json({ error: error_2 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -116,7 +111,6 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                console.log('hey');
                 return [4 /*yield*/, store.create(product)];
             case 2:
                 newProduct = _a.sent();

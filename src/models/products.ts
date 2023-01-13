@@ -2,6 +2,7 @@ import Client from "../database"
 
 
 export type Product = {
+    id? : number,
     name : string,
     price: number,
 }
@@ -58,7 +59,22 @@ export class Productstore {
       }
 
 
-
+      async delete (id : number): Promise<Product> {
+        try {
+          // @ts-ignore
+          const conn = await Client.connect()
+          const sql = 'Delete from products where id = ($1) returning *'
+      
+          const result = await conn.query(sql, [id])
+          const product = result.rows[0]
+      
+          conn.release()
+      
+          return product
+        } catch(err) {
+          throw new Error(`unable delete user (${id}): ${err}`)
+        } 
+        }
 
 
 }

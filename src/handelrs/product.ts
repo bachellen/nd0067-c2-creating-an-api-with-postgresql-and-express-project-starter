@@ -7,16 +7,6 @@ const {TOKEN_SECRET} = process.env
 const store = new Productstore()
 
 const index =async (_req:Request, res:Response) => {
-    // try {
-    //     console.log("hala")
-    //     const authorizationHeader = _req.headers.authorization
-    //     const token = authorizationHeader!.split(' ')[1]
-    //     jwt.verify(token, TOKEN_SECRET!)
-    // } catch (error) {
-    //     res.status(401)
-    //     res.json('Access denied, invalid token')
-    //     return
-    // }
 try {
     const orders = await store.index()
     res.json(orders)
@@ -27,16 +17,7 @@ try {
 }    
 
 const show = async (_req:Request, res:Response) => {
-    console.log("wlaah")
-    // try {
-    //     const authorizationHeader = _req.headers.authorization
-    //     const token = authorizationHeader!.split(' ')[1]
-    //     jwt.verify(token, TOKEN_SECRET!)
-    // } catch (error) {
-    //     res.status(401)
-    //     res.json('Access denied, invalid token')
-    //     return
-    // }
+    // console.log("wlaah")
     
     try {
         const id = _req.params.id as unknown as number
@@ -47,10 +28,10 @@ const show = async (_req:Request, res:Response) => {
             return false
           }
 
-        console.log(id)
+        // console.log(id)
         const product : Product = await store.show(id)
         res.json(product)
-        console.log(product)
+        // console.log(product)
     } catch (error) {
         res.status(400)
         res.json({ error })
@@ -73,7 +54,7 @@ const show = async (_req:Request, res:Response) => {
             price: _req.body.price,
         }
         try {
-            console.log('hey')
+            // console.log('hey')
             const newProduct = await store.create(product)
             res.json(product)
          

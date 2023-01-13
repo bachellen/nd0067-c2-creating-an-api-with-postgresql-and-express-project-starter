@@ -20,3 +20,4 @@ app.listen(3000, function () {
 (0, user_1["default"])(app);
 (0, order_1["default"])(app);
 (0, product_1["default"])(app);
+exports["default"] = app;

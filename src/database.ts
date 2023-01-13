@@ -6,9 +6,9 @@ dotenv.config()
 const {
   POSTGRES_HOST,
   POSTGRES_DB,
+  POSTGRES_DB_TEST,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  POSTGRES_TEST_DB,
   ENV,
 } = process.env
 
@@ -18,7 +18,7 @@ console.log(ENV)
 if(ENV === 'test') {
  config  = {
     host: POSTGRES_HOST,
-    database: POSTGRES_TEST_DB,
+    database: POSTGRES_DB_TEST,
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
   }

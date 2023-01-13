@@ -4,6 +4,7 @@ import Client from "../database"
 const {BCRYPT_PASSWORD, SALT_ROUNDS} = process.env
 
 export type User = {
+    id? : number,
     username : string,
     password : string,
     firstname : string,
@@ -11,7 +12,7 @@ export type User = {
 }
 
 export class Userstore {
-
+  
     async index (): Promise<User[]> {
         try {
           const conn = await Client.connect()
@@ -62,21 +63,39 @@ export class Userstore {
         }
       }
 
+      async delete (id : number): Promise<User> {
+        try {
+          // @ts-ignore
+          const conn = await Client.connect()
+          const sql = 'Delete from users where id = ($1) returning *'
+      
+          const result = await conn.query(sql, [id])
+          const user = result.rows[0]
+      
+          conn.release()
+      
+          return user
+        } catch(err) {
+          throw new Error(`unable delete user (${id}): ${err}`)
+        } 
+        }
+      
+
       async authenticate(username: string, password: string): Promise<User | null> {
         const conn = await Client.connect()
-        const sql = 'SELECT password_digest FROM users WHERE username=($1)'
+        const sql = 'SELECT password FROM users WHERE username=($1)'
     
         const result = await conn.query(sql, [username])
     
-        console.log(password+BCRYPT_PASSWORD)
+        // console.log(password+BCRYPT_PASSWORD)
     
         if(result.rows.length) {
     
           const user = result.rows[0]
     
-          console.log(user)
+          // console.log(user)
     
-          if (bcrypt.compareSync(password+BCRYPT_PASSWORD, user.password_digest)) {
+          if (bcrypt.compareSync(password+BCRYPT_PASSWORD, user.password)) {
             return user
           }
         }
