@@ -54,11 +54,19 @@ describe("Order Model",()=>{
        await store.delete(Number(newOrder.id))
     });
     it('fetch certian order', async function () {
-      const order = {status: 'active', user_id: user_id }
+      const user: User = await userstore.create({
+        username: "jweeej",
+        password: "abrakadbra",
+        firstname: "Jawaher",
+        lastname: "alanezi",
+      })
+      const id = Number(user.id)
+      const order = {status: 'active', user_id: id }
       const newOrder: Order = await store.create(order)
-      const orderobj : Order = await store.show(user_id)
+      const orderobj : Order = await store.show(id)
       expect(orderobj).toEqual(newOrder)
       await store.delete(Number(orderobj.id))
+      await userstore.delete(id)
   });
     it("create method should create an order", async () => {
         const order = {status: 'active', user_id: user_id }
@@ -71,22 +79,29 @@ describe("Order Model",()=>{
         await store.delete(Number(newOrder.id))
       })
       it("add method should add a product to an order", async () => {
-        const order = {status: 'active', user_id: user_id }
+        const user: User = await userstore.create({
+          username: "nooni",
+          password: "hello",
+          firstname: "Nouf",
+          lastname: "aljahani",
+        })
+        const id = Number(user.id)
+        const order = {status: 'active', user_id: id }
         const newOrder: Order = await store.create(order)
-        const product = {
-          quantity : 2,
+
+        const theproduct  = {
+          quantity :2,
           order_id : Number(newOrder.id),
           product_id : product_id
         }
-        
-        const newproduct = await store.addProduct(product.quantity,product.order_id!,product.product_id)
+        const newproduct = await store.addProduct(2,Number(newOrder.id),product_id)
         const expected = {
           quantity :  newproduct.quantity,
           order_id : Number(newproduct.order_id),
           product_id : Number(newproduct.product_id)
         }
         order_id = Number(newproduct.order_id)
-        expect(expected).toEqual(product)
+        expect(expected).toEqual(theproduct)
         await store.removeProduct(Number(newproduct.order_id),Number(newproduct.product_id))
        
       })

@@ -69,7 +69,6 @@ describe("Order Endpoint", () => {
         if (id !== undefined){
          request.delete(`/orders/${id}`).set("Authorization", "bearer " + token).then((res)=>{
           const {body, status} = res
-          console.log('delete order in create ',status)
          })
         }
       })
@@ -80,7 +79,6 @@ describe("Order Endpoint", () => {
         .set("Authorization", "bearer " + token)
         .then((res) => {
           expect(res.status).toBe(200)
-          console.log('fetch all orders, ', res.body)
           done()
         })
       })
@@ -91,7 +89,6 @@ describe("Order Endpoint", () => {
       .set("Authorization", "bearer " + token)
       .then((res) => {
         expect(res.status).toBe(200)
-        console.log('fetch one order for user ', res.body)
 
         done()
       })
@@ -101,13 +98,13 @@ describe("Order Endpoint", () => {
         product_id : product_id,
         quantity : 3
       }
+
       request
       .post(`/orders/${order_id}/products`)
       .send(addedproduct)
       .set("Authorization", "bearer " + token)
       .then((res) => {
       const {body, status} = res
-      console.log('add product to order ',body)
 
       expect(status).toBe(200)
       done();
@@ -117,7 +114,6 @@ describe("Order Endpoint", () => {
     it("should delete an order", (done) =>{
       request.delete(`/orders/${order_id}`).set("Authorization", "bearer " + token)
       .then((res) => {
-          console.log("delete order ", res.body)
           expect(res.status).toBe(200)
           done()
         })
