@@ -8,7 +8,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Index : '/products' [GET]
 - Show : '/products/:id' [GET] *you should pass product id*
 - Create [token required] : '/products' [POST] *you should pass product info*
-- 
+
 
 #### Users
 - Index [token required] : '/users' [GET]
@@ -29,20 +29,47 @@ These are the notes from a meeting with the frontend developer that describe wha
 -  id
 - name
 - price
-
+       ###### Table "products"
+        Column |         Type                         
+        -------+-----------------------
+        id     | integer               
+        name   | character varying(25) 
+        price  | integer               
 
 #### User
 - id
 - firstName
 - lastName
 - password
-
+       ###### Table "users"
+         Column   |          Type                
+        ----------+------------------------
+        id        | integer                
+        username  | character varying(100) 
+        password  | character varying      
+        firstname | character varying(255) 
+        lastname  | character varying(255) 
 #### Order 
 - id
 - user_id
 - status of order (active or complete)
+       ###### Table "orders"
+        Column  |         Type                        
+       ---------+-----------------------
+       id       | integer              
+       status   | character varying(15) 
+       user_id  | bigint              
+
 ##### Product in order 
 - id of the order
 - id of each product in the order
 - quantity of each product in the order
+       ###### Table "order_products"
+        Column     |  Type          
+        -----------+---------
+        id         | integer 
+        quantity   | integer 
+        order_id   | bigint   
+        product_id | bigint   
+
 

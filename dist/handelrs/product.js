@@ -114,7 +114,7 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, store.create(product)];
             case 2:
                 newProduct = _a.sent();
-                res.json(product);
+                res.json(newProduct);
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();

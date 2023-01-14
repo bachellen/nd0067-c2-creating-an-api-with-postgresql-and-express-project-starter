@@ -66,13 +66,13 @@ export class Orderstore {
         try {
           // @ts-ignore
           const conn = await Client.connect()
-          const sql = 'Delete from orders where id = ($1) returning *'
           const productsql = 'Delete from order_products where order_id = ($1) returning *'
-    
-          const result = await conn.query(sql, [id])
-          const order = result.rows[0]
+          const sql = 'Delete from orders where id = ($1) returning *'    
           const result1 = await conn.query(productsql, [id])
           const products = result1
+          const result = await conn.query(sql, [id])
+          const order = result.rows[0]
+
 
           conn.release()
     
@@ -91,7 +91,6 @@ export class Orderstore {
               .query(sql, [quantity, order_id, product_id])
     
           const product = result.rows[0]
-    
           conn.release()
     
           return product

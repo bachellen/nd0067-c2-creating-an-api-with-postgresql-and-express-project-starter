@@ -46,6 +46,20 @@ describe("Order Model",()=>{
         expect(store.delete).toBeDefined()
       })
 
+    it('fetch all orders', async function () {
+        const order = {status: 'active', user_id: user_id }
+        const newOrder: Order = await store.create(order)
+        const orders = await store.index()
+       expect(orders.length).toBeGreaterThan(0);
+       await store.delete(Number(newOrder.id))
+    });
+    it('fetch certian order', async function () {
+      const order = {status: 'active', user_id: user_id }
+      const newOrder: Order = await store.create(order)
+      const orderobj : Order = await store.show(user_id)
+      expect(orderobj).toEqual(newOrder)
+      await store.delete(Number(orderobj.id))
+  });
     it("create method should create an order", async () => {
         const order = {status: 'active', user_id: user_id }
         const newOrder: Order = await store.create(order)
@@ -76,5 +90,6 @@ describe("Order Model",()=>{
         await store.removeProduct(Number(newproduct.order_id),Number(newproduct.product_id))
        
       })
+
 
 })

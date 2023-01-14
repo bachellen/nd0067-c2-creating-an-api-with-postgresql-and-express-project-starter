@@ -56,7 +56,7 @@ const show = async (_req:Request, res:Response) => {
         try {
             // console.log('hey')
             const newProduct = await store.create(product)
-            res.json(product)
+            res.json(newProduct)
          
         } catch(err) {
             res.status(400)
