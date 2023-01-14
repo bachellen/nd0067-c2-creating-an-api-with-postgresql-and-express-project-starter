@@ -64,6 +64,7 @@ BCRYPT_PASSWORD=your_bcrypt_passowrd
 SALT_ROUNDS=11
 
 TOKEN_SECRET=your_token_secret
+```
 
 ```
 
