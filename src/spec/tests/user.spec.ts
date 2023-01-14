@@ -43,6 +43,17 @@ describe("User Model",()=>{
         expect(expected).toEqual(compareUser)
         await store.delete(Number(newUser.id))
       })
-
+      it('fetch all users', async function () {
+        const newUser = await store.create(user)
+        const users = await store.index()
+       expect(users.length).toBeGreaterThan(0);
+       await store.delete(Number(newUser.id))
+    });
+    it('fetch certian user', async function () {
+      const newUser = await store.create(user)
+      const userobj = await store.show(Number(newUser.id))
+      expect(userobj).toEqual(newUser)
+      await store.delete(Number(userobj.id))
+  });
 })
 

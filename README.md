@@ -47,6 +47,8 @@ To undo the migrations run the follosing command
 ```
 POSTGRES_HOST=your_ip
 
+DB_PORT= 5432
+
 POSTGRES_DB=your_dtatabase_name
 
 POSTGRES_DB_TEST=your_test_dtatabase_name
@@ -64,8 +66,9 @@ SALT_ROUNDS=11
 TOKEN_SECRET=your_token_secret
 ```
 
+```
+
 ## Run the project 
 
 To run the project you can run the following command
 `yarn start` or `npm start`
-

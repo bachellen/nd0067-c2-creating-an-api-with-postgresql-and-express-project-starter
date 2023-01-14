@@ -8,6 +8,7 @@ const request = supertest(app)
 const TOKEN_SECRET = process.env.TOKEN_SECRET 
 let token : string
 let user_id : number
+let product_id :number
 
 describe("Product Endpoint", () => {
 
@@ -46,7 +47,7 @@ describe("Product Endpoint", () => {
         .set("Authorization", "bearer " + token)
         .then((res) => {
         const {body, status} = res
-       
+        product_id = Number(body.id)
         expect(status).toBe(200)
         done();
         })
@@ -61,5 +62,13 @@ describe("Product Endpoint", () => {
           done()
         })
       })
-
+      it("should succsess when get specified product (show)", (done) => {
+        request
+        .get(`/products/${1}`)
+        .set("Authorization", "bearer " + token)
+        .then((res) => {
+          expect(res.status).toBe(200)
+          done()
+        })
+      })
 })
