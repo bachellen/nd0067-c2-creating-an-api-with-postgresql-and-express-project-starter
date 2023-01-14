@@ -17,11 +17,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Auth (login) : '/users/auth' [POST] *you should pass login info*
 - Delete [token required]: 'users/:id' [DELETE] *you should add user id*
 
-    app.get("/orders", index)
-    app.get("/orders/:user_id", show)
-    app.post('/orders', create)
-    app.post('/orders/:id/products', addProduct)
-    app.delete("/orders/:id", deleteOrder)
 #### Orders
 - Current Order by user (args: user id)[token required] :'/orders/:user_id' [GET] *you should add user id*
 - Index [token required] : '/orders' [GET]
