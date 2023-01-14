@@ -5,27 +5,36 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index : '/products' [GET]
+- Show : '/products/:id' [GET] *you should pass product id*
+- Create [token required] : '/products' [POST] *you should pass product info*
+- 
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] : '/users' [GET]
+- Show [token required] : '/users/:id' [GET] *you should add user id*
+- Create N[token required] : '/users' [POST] *you should pass user info*
+- Auth (login) : '/users/auth' [POST] *you should pass login info*
+- Delete [token required]: 'users/:id' [DELETE] *you should add user id*
 
+    app.get("/orders", index)
+    app.get("/orders/:user_id", show)
+    app.post('/orders', create)
+    app.post('/orders/:id/products', addProduct)
+    app.delete("/orders/:id", deleteOrder)
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Current Order by user (args: user id)[token required] :'/orders/:user_id' [GET] *you should add user id*
+- Index [token required] : '/orders' [GET]
+- Create Order[token required] : '/orders' [POST] *you should pass order info*
+- Add product to an order [token required] : '/orders/:id/products' [POST] *you should add order id and pass product info*
+- Delete [token required]: '/order/:id' [DELETE] *you should add order id*
 
 ## Data Shapes
 #### Product
 -  id
 - name
 - price
-- [OPTIONAL] category
+
 
 #### User
 - id
@@ -33,10 +42,12 @@ These are the notes from a meeting with the frontend developer that describe wha
 - lastName
 - password
 
-#### Orders
+#### Order 
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
+##### Product in order 
+- id of the order
+- id of each product in the order
+- quantity of each product in the order
 

@@ -39,16 +39,9 @@ const show = async (_req:Request, res:Response) => {
     }
     
     try {
-        const id = _req.params.id as unknown as number
-
-        if (id === undefined) {
-            res.status(400)
-            res.send("Missing required parameter :id.")
-            return false
-          }
-
+        const user_id = _req.params.user_id as unknown as number
         // console.log(id)
-        const order : Order = await store.show(id)
+        const order : Order = await store.show(user_id)
         res.json(order)
         // console.log(order)
     } catch (error) {
@@ -135,7 +128,7 @@ const show = async (_req:Request, res:Response) => {
 
 export default function orderRoutes (app: Application) {
     app.get("/orders", index)
-    app.get("/orders/:id", show)
+    app.get("/orders/:user_id", show)
     app.post('/orders', create)
     app.post('/orders/:id/products', addProduct)
     app.delete("/orders/:id", deleteOrder)

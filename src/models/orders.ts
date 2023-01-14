@@ -29,11 +29,11 @@ export class Orderstore {
   }
 
 
-    async show (id: number): Promise<Order> {
+    async show (user_id: number): Promise<Order> {
         try {
-          const sql = "SELECT * FROM orders WHERE id=($1)"
+          const sql = "SELECT * FROM orders WHERE user_id=($1)"
           const conn = await Client.connect()
-          const result = await conn.query(sql, [id])
+          const result = await conn.query(sql, [user_id])
           const order = result.rows[0]
     
     
@@ -41,7 +41,7 @@ export class Orderstore {
     
           return order
         } catch (err) {
-          throw new Error(`Could not find order ${id}. ${err}`)
+          throw new Error(`Could not find order for user ${user_id}. ${err}`)
         }
       }
 

@@ -76,7 +76,7 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorizationHeader, token, id, order, error_2;
+    var authorizationHeader, token, user_id, order, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -94,13 +94,8 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                id = _req.params.id;
-                if (id === undefined) {
-                    res.status(400);
-                    res.send("Missing required parameter :id.");
-                    return [2 /*return*/, false];
-                }
-                return [4 /*yield*/, store.show(id)];
+                user_id = _req.params.user_id;
+                return [4 /*yield*/, store.show(user_id)];
             case 2:
                 order = _a.sent();
                 res.json(order);
@@ -225,7 +220,7 @@ var deleteOrder = function (_req, res) { return __awaiter(void 0, void 0, void 0
 }); };
 function orderRoutes(app) {
     app.get("/orders", index);
-    app.get("/orders/:id", show);
+    app.get("/orders/:user_id", show);
     app.post('/orders', create);
     app.post('/orders/:id/products', addProduct);
     app["delete"]("/orders/:id", deleteOrder);

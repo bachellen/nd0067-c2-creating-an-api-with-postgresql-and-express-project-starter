@@ -68,18 +68,18 @@ var Orderstore = /** @class */ (function () {
             });
         });
     };
-    Orderstore.prototype.show = function (id) {
+    Orderstore.prototype.show = function (user_id) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, order, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = "SELECT * FROM orders WHERE id=($1)";
+                        sql = "SELECT * FROM orders WHERE user_id=($1)";
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [id])];
+                        return [4 /*yield*/, conn.query(sql, [user_id])];
                     case 2:
                         result = _a.sent();
                         order = result.rows[0];
@@ -87,7 +87,7 @@ var Orderstore = /** @class */ (function () {
                         return [2 /*return*/, order];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not find order ".concat(id, ". ").concat(err_2));
+                        throw new Error("Could not find order for user ".concat(user_id, ". ").concat(err_2));
                     case 4: return [2 /*return*/];
                 }
             });
